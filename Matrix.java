@@ -66,6 +66,19 @@ public class Matrix
         this.m[i][j] = val;
     }
 
+    public Matrix scale(double s)
+    {
+        Matrix out = new Matrix(this.row, this.col, 0.0);
+        for(int i = 0; i < out.row; i++)
+        {
+            for(int j = 0; j < out.col; j++)
+            {
+                out.m[i][j] = s*this.m[i][j];
+            }
+        }
+        return out;
+    }
+
     public void swapRow(int a, int b)
     {
         double[] temp = this.m[a];

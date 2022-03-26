@@ -8,6 +8,7 @@ public class TestMatrix
         System.out.println("Matrix 1 =\n" + m1);
         System.out.println("Matrix 1 echelon =\n" + m1.echelon());
         System.out.println("Matrix 1 determinate =\n" + m1.det());
+        System.out.println("Matrix 1 scaled by 2 =\n" + m1.scale(2.0));
 
         Matrix m2 = new Matrix(new double[][]{{1.0, 1.0, 1.0}, {2.0, 2.0, 2.0}, {3.0, 3.0, 3.0}});
         System.out.println("Matrix 2 =\n" + m2);
