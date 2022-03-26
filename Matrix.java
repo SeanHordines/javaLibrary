@@ -8,7 +8,7 @@ public class Matrix
     private int col;
     private double[][] m;
     private double[][] e;
-    double q;
+    private double q;
 
     public Matrix(int r, int c, double d)
     {
@@ -75,8 +75,18 @@ public class Matrix
 
     public Matrix echelon()
     {
-        this.e = this.m;
+        //copy values of m into e
+        this.e = new double[this.row][this.col];
+        for(int i = 0; i < this.row; i++)
+        {
+            for(int j = 0; j < this.col; j++)
+            {
+                this.e[i][j] = this.m[i][j];
+            }
+        }
+
         this.q = 1.0;
+
         //begin row reduction
         for(int i = 0; i < this.row; i++)
         {
@@ -148,5 +158,29 @@ public class Matrix
             diag *= this.e[i][i];
         }
         return q * diag;
+    }
+
+    public Matrix mult(Matrix other)
+    {
+        if(this.col == other.row)
+        {
+            Matrix out = new Matrix(this.row, other.col, 0.0);
+            for(int i = 0; i < this.row; i++)
+            {
+                for(int j = 0; j < other.col; j++)
+                {
+                    for(int k = 0; k < this.col; k++)
+                    {
+                        out.m[i][j] += this.m[i][k] * other.m[k][j];
+                    }
+                }
+            }
+            return out;
+        }
+        else
+        {
+            System.out.println("Matrices do not have matching dimensions");
+            return null;
+        }
     }
 }
