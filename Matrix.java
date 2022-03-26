@@ -138,7 +138,7 @@ public class Matrix
         //check if matrix is square
         if(this.row != this.col)
         {
-            throw new Exception("Matrix is not square");
+            System.out.println("Matrix is not square");
             return 0.0;
         }
 
