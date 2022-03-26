@@ -8,6 +8,7 @@ public class Matrix
     private int col;
     private double[][] m;
     private double[][] e;
+    double q;
 
     public Matrix(int r, int c, double d)
     {
@@ -72,18 +73,10 @@ public class Matrix
         this.m[b] = temp;
     }
 
-    public double det()
+    public Matrix echelon()
     {
-        //det(m) = q * det(echelon form)
-        double q = 1.0;
         this.e = this.m;
-
-        //check if matrix is square
-        if(this.row != this.col)
-        {
-            return 0.0;
-        }
-
+        this.q = 1.0;
         //begin row reduction
         for(int i = 0; i < this.row; i++)
         {
@@ -101,28 +94,28 @@ public class Matrix
                 }
                 if(l == 0)
                 {
-                    return 0;
+                    return null;
                 }
                 swapRow(i, l);
                 q *= -1;
             }
 
-            //scale the row so the first term = 1.0
-            if(this.e[i][i] != 1.0)
-            {
-                double scalar = 1.0/this.e[i][i];
-                for(int j = 0; j < this.col; j++)
-                {
-                    this.e[i][j] *= scalar;
-                }
-                q *= 1.0/scalar;
-            }
+            // //scale the row so the first term = 1.0
+            // if(this.e[i][i] != 1.0)
+            // {
+            //     double scalar = 1.0/this.e[i][i];
+            //     for(int j = 0; j < this.col; j++)
+            //     {
+            //         this.e[i][j] *= scalar;
+            //     }
+            //     q *= 1.0/scalar;
+            // }
 
             //substract row from others to make ith term = 0.0
             for(int j = i+1; j < this.row; j++)
             {
                 double[] temp = this.e[j];
-                double scalar = temp[i];
+                double scalar = temp[i]/this.e[i][i];
                 for(int k = i; k < this.col; k++)
                 {
                     temp[k] = this.e[j][k] - (scalar * this.e[i][k]);
@@ -130,12 +123,29 @@ public class Matrix
                 this.e[j] = temp;
             }
         }
-        return q;
+        return new Matrix(this.e);
     }
 
-    public double[][] echelon()
+    public double det()
     {
-        det();
-        return this.e;
+        //det(m) = q * det(echelon form)
+
+        if(this.e == null)
+        {
+            echelon();
+        }
+
+        //check if matrix is square
+        if(this.row != this.col)
+        {
+            return 0.0;
+        }
+
+        double diag = 1.0;
+        for(int i = 0; i < this.row; i++)
+        {
+            diag *= this.e[i][i];
+        }
+        return q * diag;
     }
 }

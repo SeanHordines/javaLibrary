@@ -4,17 +4,10 @@ public class TestMatrix
 {
     public static void main(String[] args)
     {
-        Matrix m = new Matrix(3, 3, 0.0);
-        for(int i = 0; i < 3; i++)
-        {
-            for(int j = 0; j < 3; j++)
-            {
-                m.setVal(i, j, Math.pow(i+1, 2) + 2*j + (i*j) +i);
-            }
-        }
-        m.setVal(1, 1, -5);
-        System.out.println(m.toString());
+        double[][] temp = {{1.0, 1.0, 1.0}, {3.0, 2.0, 1.0}, {9.0, 4.0, 1.0}};
+        Matrix m = new Matrix(temp);
+        System.out.println(m);
+        System.out.println(m.echelon());
         System.out.println(m.det());
-        System.out.println(new Matrix(m.echelon()).toString());
     }
 }
